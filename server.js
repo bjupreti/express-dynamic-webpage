@@ -14,8 +14,8 @@ app.get('/', (request, response) => {
 
 app.get('/speakers', (request, response) => {
   response.sendFile(path.join(__dirname, './static/speakers.html'));
-})
+});
 
 app.listen(port, () => {
   console.log(`Node server running on ${port}`);
-})
+});

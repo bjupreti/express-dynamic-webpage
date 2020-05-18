@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieSession = require('cookie-session');
 const path = require('path');
 const routes = require('./routes');
 
@@ -11,6 +12,15 @@ const speakerService = new SpeakerService('./data/speakers.json');
 const app = express();
 
 const port = 3000;
+
+app.set('trust proxy', 1);
+
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['random1', 'random2'],
+  })
+);
 
 // setting view engine
 app.set('view engine', 'ejs');

@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieSession = require('cookie-session');
+const createError = require('http-errors');
 const path = require('path');
 const routes = require('./routes');
 
@@ -49,6 +50,23 @@ app.use(
     speakerService,
   })
 );
+
+// when to other route is matched from above finally it comes to this middleware
+app.use((request, response, next) => {
+  return next(createError(404, 'File not found'));
+});
+
+// error handling middleware
+app.use((error, request, response, next) => {
+  console.error(error);
+  response.locals.message = error.message;
+
+  const status = error.status || 500;
+  response.locals.status = status;
+  response.status(status);
+
+  response.render('error');
+});
 
 app.listen(port, () => {
   console.log(`Node server running on ${port}`);

@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieSession = require('cookie-session');
 const createError = require('http-errors');
+const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./routes');
 
@@ -22,6 +23,8 @@ app.use(
     keys: ['random1', 'random2'],
   })
 );
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // setting view engine
 app.set('view engine', 'ejs');
